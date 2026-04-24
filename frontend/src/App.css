@@ -1,0 +1,39 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f9fafb;
+}
+
+h2 {
+  color: #2563eb;
+  margin-top: 20px;
+}
+
+h3 {
+  color: #7c3aed;
+  margin-top: 10px;
+}
+
+ul {
+  margin-left: 15px;
+}
+
+li {
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.formula {
+  background: #f3f4f6;
+  padding: 10px;
+  border-left: 4px solid #2563eb;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.box {
+  background: #ecfeff;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
