@@ -25,7 +25,7 @@ function App() {
       formData.append("type", "quiz");
       formData.append("num_questions", numQuestions);
 
-      const response = await fetch("http://localhost:8000/upload", {
+      const response = await fetch("https://abqariquiz.onrender.com/upload", {
         method: "POST",
         body: formData,
       });
@@ -35,12 +35,12 @@ function App() {
       if (data.questions) {
         setQuiz(data.questions);
       } else {
-        alert("No quiz generated");
+        alert("❌ No quiz generated. Try another PDF.");
       }
 
     } catch (error) {
       console.error(error);
-      alert("Error uploading file");
+      alert("⚠️ Something went wrong. Try smaller PDF or check your internet.");
     }
 
     setLoading(false);
@@ -67,7 +67,7 @@ function App() {
 
   const downloadPDF = async () => {
     try {
-      const response = await fetch("http://localhost:8000/download-pdf", {
+      const response = await fetch("https://abqariquiz.onrender.com/download-pdf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -91,10 +91,13 @@ function App() {
 
   return (
     <div style={{
-      background: "#f5f6fa",
-      minHeight: "100vh",
-      padding: "20px"
-    }}>
+  width: "100%",    
+  padding: "20px",
+  maxWidth: "600px",
+  margin: "auto",
+  textAlign: "center"
+}}>
+    
 
       {/* CARD */}
       <div style={{
@@ -106,7 +109,10 @@ function App() {
         boxShadow: "0 0 10px rgba(0,0,0,0.1)"
       }}>
 
-        <h1 style={{ textAlign: "center" }}>AbqariQuiz 🚀</h1>
+        <h1 style={{ marginBottom: "5px" }}>
+          <span style={{ color: "#0B3C5D" }}>Abqari</span>
+          <span style={{ color: "#FF7A00" }}>Quiz</span>
+        </h1>
         <p style={{ textAlign: "center", color: "gray" }}>
           Convert your PDF into a practice Quiz
         </p>
@@ -115,33 +121,45 @@ function App() {
 
         {/* Upload */}
         <input
-          type="file"
-          accept="application/pdf"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+         type="file"
+         accept="application/pdf"
+         onChange={(e) => setFile(e.target.files[0])}
+         style={{ width: "100%", marginBottom: "10px" }}
+         />
 
         <br /><br />
 
         {/* Questions */}
         <label>Number of Questions:</label>
         <input
-          type="number"
-          value={numQuestions}
-          onChange={(e) => setNumQuestions(e.target.value)}
-          style={{ marginLeft: "10px", width: "60px" }}
-        />
+         type="number"
+         value={numQuestions}
+         onChange={(e) => setNumQuestions(e.target.value)}
+         style={{
+         width: "80%",
+         padding: "10px",
+         marginTop: "10px"
+         }}
+         />
 
         <br /><br />
 
-        <button onClick={handleUpload} disabled={loading} style={{
-          padding: "10px 15px",
-          background: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "5px"
-        }}>
-          Generate Quiz
-        </button>
+        <button
+  onClick={handleUpload}
+  disabled={loading}
+  style={{
+    width: "100%",
+    padding: "10px 15px",
+    background: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+     fontSize: "16px",
+    marginTop: "10px"
+  }}
+>
+  {loading ? "Generating..." : "Generate Quiz"}
+</button>
 
         <hr />
 
@@ -151,10 +169,12 @@ function App() {
         {/* Quiz */}
         {quiz.map((q, index) => (
           <div key={index} style={{ marginBottom: "20px" }}>
-            <h3>{index + 1}. {q.question}</h3>
+            <h3 style={{ fontSize: "18px", textAlign: "left" }}>
+              {index + 1}. {q.question}
+            </h3>
 
             {Object.entries(q.options).map(([key, value]) => (
-              <div key={key}>
+              <div key={key} style={{ marginBottom: "8px", textAlign: "left" }}>
                 <label>
                   <input
                     type="radio"
@@ -188,18 +208,20 @@ function App() {
       Submit Quiz
     </button>
 
-    <button 
-  onClick={downloadPDF}
-  style={{
-    marginLeft: "10px",
-    background: "#98b4d2",
-    color: "white",
-    padding: "8px",
-    borderRadius: "5px"
-  }}
->
-  📄 Download PDF
-</button>
+     <button
+    onClick={downloadPDF}
+    style={{
+      width: "100%",
+      padding: "12px",
+      background: "#0B3C5D",
+      color: "white",
+      border: "none",
+      borderRadius: "8px",
+      marginTop: "10px"
+    }}
+  >
+    📄 Download Quiz PDF
+  </button>
 
   </div>
 )}
