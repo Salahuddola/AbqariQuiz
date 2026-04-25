@@ -65,16 +65,18 @@ function App() {
     return score;
   };
 
-  const downloadPDF = async () => {
+  const handleDownload = async () => {
+
+  console.log("Sending to PDF:", quiz);
     try {
-      console.log("Sending to PDF:", quiz);
+      
       const response = await fetch("https://abqariquiz.onrender.com/download-pdf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
        body: JSON.stringify({
-       questions: quizData
+       questions: quiz
         })
       });
 
