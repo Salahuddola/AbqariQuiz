@@ -13,6 +13,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from ai_service import  generate_quiz
 from pdf_generator import generate_quiz_pdf
 from fastapi.responses import FileResponse
+from pydantic import BaseModel
+
+class QuizRequest(BaseModel):
+    questions: list
 
 
 app = FastAPI()
@@ -38,9 +42,9 @@ def safe_parse_quiz(response_text):
         return None   
     
 @app.post("/download-pdf")
-async def download_pdf(questions: list):
+async def download_pdf(data: QuizRequest):
 
-    file_path = generate_quiz_pdf(questions)
+    file_path = generate_quiz_pdf(data.questions)
 
     return FileResponse(
         path=file_path,

@@ -67,12 +67,15 @@ function App() {
 
   const downloadPDF = async () => {
     try {
+      console.log("Sending to PDF:", quizData);
       const response = await fetch("https://abqariquiz.onrender.com/download-pdf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(quiz)
+       body: JSON.stringify({
+       questions: quizData
+        })
       });
 
       const blob = await response.blob();
